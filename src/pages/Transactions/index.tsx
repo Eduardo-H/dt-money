@@ -1,10 +1,25 @@
+import { useEffect, useState } from 'react';
 import { Header } from '../../components/Header';
 import { Summary } from '../../components/Summary';
+import { useTransactions } from '../../hooks/useTransactions';
 import { SearchForm } from './components/SearchForm';
 
 import { PriceHighlight, TransactionsContainer, TransactionsTable } from './styles';
 
 export function Transactions() {
+  const { transactions, setTransactions } = useTransactions();
+
+  async function fetchTransactions() {
+    const response = await fetch('http://localhost:3333/transactions');
+    const data = await response.json();
+
+    setTransactions(data);
+  }
+
+  useEffect(() => {
+    fetchTransactions();
+  }, []);
+
   return (
     <div>
       <Header />
@@ -15,36 +30,24 @@ export function Transactions() {
 
         <TransactionsTable>
           <tbody>
-            <tr>
-              <td width="50%">Salary</td>
-              <td>
-                <PriceHighlight variant="income">
-                  $3,000.00
-                </PriceHighlight>
-              </td>
-              <td>Jobs</td>
-              <td>07/02/2023</td>
-            </tr>
-            <tr>
-              <td width="50%">Groceries</td>
-              <td>
-                <PriceHighlight variant="outcome">
-                  - $100.00
-                </PriceHighlight>
-              </td>
-              <td>Food</td>
-              <td>05/02/2023</td>
-            </tr>
-            <tr>
-              <td width="50%">Freelance</td>
-              <td>
-                <PriceHighlight variant="income">
-                  $1,000.00
-                </PriceHighlight>
-              </td>
-              <td>Jobs</td>
-              <td>02/02/2023</td>
-            </tr>
+            {transactions.map(transaction => (
+              <tr key={transaction.id}>
+                <td width="50%">
+                  {transaction.description}
+                </td>
+                <td>
+                  <PriceHighlight variant={transaction.type}>
+                    {transaction.type === 'outcome' && '-'} ${transaction.price.toLocaleString('us', { currency: 'USD', minimumFractionDigits: 2 })}
+                  </PriceHighlight>
+                </td>
+                <td>
+                  {transaction.category}
+                </td>
+                <td>
+                  {new Date(transaction.createdAt).toLocaleDateString('pt-BR')}
+                </td>
+              </tr>
+            ))}
           </tbody>
         </TransactionsTable>
       </TransactionsContainer>

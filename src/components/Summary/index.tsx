@@ -1,7 +1,11 @@
 import { ArrowCircleDown, ArrowCircleUp, CurrencyDollar } from 'phosphor-react';
+import { useTransactions } from '../../hooks/useTransactions';
+
 import { SummaryCard, SummaryContainer } from './styles';
 
 export function Summary() {
+  const { transactions } = useTransactions();
+
   return (
     <SummaryContainer>
       <SummaryCard>
