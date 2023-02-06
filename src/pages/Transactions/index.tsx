@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Header } from '../../components/Header';
 import { Summary } from '../../components/Summary';
 import { useTransactions } from '../../hooks/useTransactions';
+import { dateFormatter, priceFormatter } from '../../utils/formatter';
 import { SearchForm } from './components/SearchForm';
 
 import { PriceHighlight, TransactionsContainer, TransactionsTable } from './styles';
@@ -37,14 +38,15 @@ export function Transactions() {
                 </td>
                 <td>
                   <PriceHighlight variant={transaction.type}>
-                    {transaction.type === 'outcome' && '-'} ${transaction.price.toLocaleString('us', { currency: 'USD', minimumFractionDigits: 2 })}
+                    {transaction.type === 'outcome' && '- '}
+                    ${priceFormatter.format(transaction.price)}
                   </PriceHighlight>
                 </td>
                 <td>
                   {transaction.category}
                 </td>
                 <td>
-                  {new Date(transaction.createdAt).toLocaleDateString('pt-BR')}
+                  {dateFormatter.format(new Date(transaction.createdAt))}
                 </td>
               </tr>
             ))}
