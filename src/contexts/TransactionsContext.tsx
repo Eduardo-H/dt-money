@@ -1,10 +1,5 @@
-import {
-  createContext,
-  ReactNode,
-  useContext,
-  useEffect,
-  useState,
-} from 'react'
+import { ReactNode, useEffect, useState, useCallback } from 'react'
+import { createContext } from 'use-context-selector'
 import { api } from '../lib/axios'
 
 interface Transaction {
@@ -33,12 +28,12 @@ interface TransactionsProviderProps {
   children: ReactNode
 }
 
-const TransactionContext = createContext({} as TransactionContextType)
+export const TransactionsContext = createContext({} as TransactionContextType)
 
 export function TransactionsProvider({ children }: TransactionsProviderProps) {
   const [transactions, setTransactions] = useState<Transaction[]>([])
 
-  async function fetchTransactions(query?: string) {
+  const fetchTransactions = useCallback(async (query?: string) => {
     const response = await api.get('/transactions', {
       params: {
         _sort: 'createdAt',
@@ -48,31 +43,29 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
     })
 
     setTransactions(response.data)
-  }
+  }, [])
 
-  async function createTransaction(data: CreateTransactionSchema) {
-    const response = await api.post('/transactions', {
-      ...data,
-      createdAt: new Date().toISOString(),
-    })
+  const createTransaction = useCallback(
+    async (data: CreateTransactionSchema) => {
+      const response = await api.post('/transactions', {
+        ...data,
+        createdAt: new Date().toISOString(),
+      })
 
-    setTransactions((state) => [response.data, ...state])
-  }
+      setTransactions((state) => [response.data, ...state])
+    },
+    [],
+  )
 
   useEffect(() => {
     fetchTransactions()
   }, [])
 
   return (
-    <TransactionContext.Provider
+    <TransactionsContext.Provider
       value={{ transactions, fetchTransactions, createTransaction }}
     >
       {children}
-    </TransactionContext.Provider>
+    </TransactionsContext.Provider>
   )
-}
-
-export function useTransactions() {
-  const transactionsContext = useContext(TransactionContext)
-  return transactionsContext
 }
