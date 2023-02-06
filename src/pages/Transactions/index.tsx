@@ -1,25 +1,14 @@
-import { useEffect, useState } from 'react';
 import { Header } from '../../components/Header';
 import { Summary } from '../../components/Summary';
+import { SearchForm } from './components/SearchForm';
+
 import { useTransactions } from '../../hooks/useTransactions';
 import { dateFormatter, priceFormatter } from '../../utils/formatter';
-import { SearchForm } from './components/SearchForm';
 
 import { PriceHighlight, TransactionsContainer, TransactionsTable } from './styles';
 
 export function Transactions() {
-  const { transactions, setTransactions } = useTransactions();
-
-  async function fetchTransactions() {
-    const response = await fetch('http://localhost:3333/transactions');
-    const data = await response.json();
-
-    setTransactions(data);
-  }
-
-  useEffect(() => {
-    fetchTransactions();
-  }, []);
+  const { transactions } = useTransactions();  
 
   return (
     <div>
