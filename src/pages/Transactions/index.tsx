@@ -11,11 +11,16 @@ import {
 } from './styles'
 import { useContextSelector } from 'use-context-selector'
 import { TransactionsContext } from '../../contexts/TransactionsContext'
+import { DeleteButton } from './components/DeleteButton'
 
 export function Transactions() {
   const transactions = useContextSelector(TransactionsContext, (context) => {
     return context.transactions
   })
+
+  function handleDeleteTransaction(id: number) {
+    console.log(id)
+  }
 
   return (
     <div>
@@ -38,6 +43,11 @@ export function Transactions() {
                 </td>
                 <td>{transaction.category}</td>
                 <td>{dateFormatter.format(new Date(transaction.createdAt))}</td>
+                <td>
+                  <DeleteButton
+                    onDelete={() => handleDeleteTransaction(transaction.id)}
+                  />
+                </td>
               </tr>
             ))}
           </tbody>
