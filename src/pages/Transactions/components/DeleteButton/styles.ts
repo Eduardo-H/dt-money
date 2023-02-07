@@ -17,7 +17,12 @@ export const DeleteButtonContainer = styled.button`
     line-height: 0;
   }
 
-  &:hover {
+  &:disabled {
+    background: ${(props) => props.theme['gray-600']};
+    cursor: not-allowed;
+  }
+
+  &:not(:disabled):hover {
     background: ${(props) => props.theme['red-300']};
     transition: background-color 0.2s;
   }

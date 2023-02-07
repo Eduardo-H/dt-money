@@ -14,12 +14,18 @@ import { TransactionsContext } from '../../contexts/TransactionsContext'
 import { DeleteButton } from './components/DeleteButton'
 
 export function Transactions() {
-  const transactions = useContextSelector(TransactionsContext, (context) => {
-    return context.transactions
-  })
+  const { transactions, deleteTransaction } = useContextSelector(
+    TransactionsContext,
+    (context) => {
+      return {
+        transactions: context.transactions,
+        deleteTransaction: context.deleteTransaction,
+      }
+    },
+  )
 
-  function handleDeleteTransaction(id: number) {
-    console.log(id)
+  async function handleDeleteTransaction(id: number) {
+    await deleteTransaction(id)
   }
 
   return (

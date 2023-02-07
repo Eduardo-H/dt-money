@@ -1,52 +1,28 @@
 {
   "transactions": [
     {
-      "description": "Freelance",
-      "type": "income",
-      "category": "Jobs",
+      "description": "January salary",
       "price": 2500,
-      "createdAt": "2023-02-06T05:50:00.642Z",
+      "category": "Job",
+      "type": "income",
+      "createdAt": "2023-02-07T02:06:07.500Z",
       "id": 1
     },
     {
-      "description": "Whey protein",
-      "type": "outcome",
+      "description": "Suplements",
+      "price": 200,
       "category": "Gym",
-      "price": 100,
-      "createdAt": "2023-02-06T10:20:00.642Z",
+      "type": "outcome",
+      "createdAt": "2023-02-07T02:06:39.232Z",
       "id": 2
     },
     {
-      "description": "Bike parts",
-      "price": 538,
-      "category": "Mechanic",
-      "type": "outcome",
-      "createdAt": "2023-02-06T07:12:49.795Z",
-      "id": 3
-    },
-    {
-      "description": "Just a test",
-      "price": 150,
-      "category": "Job",
-      "type": "income",
-      "createdAt": "2023-02-06T07:29:09.431Z",
-      "id": 4
-    },
-    {
-      "description": "Monthly groceries",
-      "price": 200,
+      "description": "Market",
+      "price": 300,
       "category": "Groceries",
       "type": "outcome",
-      "createdAt": "2023-02-07T01:32:58.897Z",
-      "id": 5
-    },
-    {
-      "description": "Debt payment",
-      "price": 25,
-      "category": "Others",
-      "type": "income",
-      "createdAt": "2023-02-07T01:34:15.884Z",
-      "id": 6
+      "createdAt": "2023-02-07T02:07:07.291Z",
+      "id": 3
     }
   ]
 }
